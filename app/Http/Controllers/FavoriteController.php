@@ -9,10 +9,10 @@ use Illuminate\Http\Request;
 
 class FavoriteController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:users');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth:users');
+    // }
     function getFavorites(){
         $user=auth('users')->user();
 
@@ -28,8 +28,9 @@ class FavoriteController extends Controller
         // Validate the request...
  
         $favorite = new Favorite;
- 
-        $favorite->user_id = $request->user_id;
+        $user=auth('users')->user();
+
+        $favorite->= $user->getAuthIdentifier();
         $favorite->product_id = $request->product_id;
 
         $favorite->save();

@@ -9,10 +9,10 @@ use Illuminate\Http\Request;
 class ManageProductController extends Controller
 {
 
-    public function __construct()
-    {
-        $this->middleware('auth:admins');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth:admins');
+    // }
     function getProducts(){
         $products=Product::all();
         return response()->json([

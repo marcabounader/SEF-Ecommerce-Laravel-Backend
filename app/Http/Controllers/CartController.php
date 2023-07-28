@@ -8,10 +8,10 @@ use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:users');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth:users');
+    // }
 
     function getCarts(){
         $user=auth('users')->user();
@@ -26,10 +26,11 @@ class CartController extends Controller
     public function addCart(Request $request)
     {
         // Validate the request...
- 
+        $user=auth('users')->user();
+
         $cart = new Cart;
  
-        $cart->user_id = $request->user_id;
+        $cart->user_id = $user->getAuthIdentifier();
         $cart->product_id = $request->product_id;
 
         $cart->save();

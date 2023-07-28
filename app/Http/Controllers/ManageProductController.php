@@ -9,15 +9,26 @@ use Illuminate\Http\Request;
 class ManageProductController extends Controller
 {
 
-    public function setProduct(Request $request): RedirectResponse
+    public function __construct()
+    {
+        $this->middleware('auth:admins');
+    }
+    function getProducts(){
+        $products=Product::all();
+        return response()->json([
+            'status' => 'success',
+            'products' => $products,
+        ]);
+    }
+    public function addProduct(Request $request)
     {
         // Validate the request...
  
         $product = new Product;
  
-        $product->product_name = $request->name;
-        $product->product_description = $request->description;
-        $product->product_image = $request->image;
+        $product->product_name = $request->product_name;
+        $product->product_description = $request->product_description;
+        $product->product_image = $request->product_image;
 
         $product->save();
  
@@ -26,37 +37,30 @@ class ManageProductController extends Controller
         ]);
     }   
 
-    public function updateProduct(Request $request): RedirectResponse
+    public function updateProduct(Request $request)
     {
         // Validate the request...
  
-        $product = new Product;
  
-        $product->product_name = $request->name;
-        $product->product_description = $request->description;
-        $product->product_image = $request->image;
-
-        $product->save();
- 
+        $id=$request->id;
+        $product_name=$request->product_name;
+        $product_description=$request->product_description;
+        $product_image=$request->product_image;
+        Product::where('id',$id)->update(['product_name'=>$product_name,'product_description'=>$product_description,'product_image'=>$product_image]);
         return response()->json([
             'status' => 'success',
-        ]);
+        ]); 
+
     }   
 
-    public function deleteProduct(Request $request): RedirectResponse
+    public function deleteProduct(Request $request)
     {
         // Validate the request...
  
-        $product = new Product;
- 
-        $product->product_name = $request->name;
-        $product->product_description = $request->description;
-        $product->product_image = $request->image;
-
-        $product->save();
- 
+        $id=$request->id;
+        $deleted=Product::where('id',$id)->delete();
         return response()->json([
-            'status' => 'success',
-        ]);
+            'status' => 'success'
+        ]); 
     }   
 }

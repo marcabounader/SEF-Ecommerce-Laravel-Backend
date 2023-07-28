@@ -8,10 +8,10 @@ use App\Models\User;
 
 class UserAuthController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:users', ['except' => ['login','register']]);
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth:users', ['except' => ['login','register']]);
+    // }
     public function login(Request $request)
     {
         $request->validate([

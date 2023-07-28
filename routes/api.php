@@ -21,13 +21,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::controller(ProductController::class)->group(function () {
-    Route::get('products', 'getProducts');
-    Route::post('add-product', 'setProduct');
-    // Route::get('todo/{id}', 'show');
-    // Route::put('todo/{id}', 'update');
-    // Route::delete('todo/{id}', 'destroy');
-}); 
 Route::group(['prefix' => 'login'],function ()
 {
     Route::controller(AdminAuthController::class)->group(function () {

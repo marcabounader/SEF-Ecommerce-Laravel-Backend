@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminAuthController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\ManageProductController;
 use App\Http\Controllers\ProductController;
@@ -59,6 +60,14 @@ Route::group(['prefix' => 'user'],function ()
         Route::post('add-favorite', 'addFavorite');
         Route::get('favorites', 'getFavorites');
         Route::delete('delete-favorite/{favorite_id}', 'deleteFavorite');
+
+    
+    });
+
+    Route::controller(CartController::class)->group(function () {
+        Route::post('add-cart', 'addCart');
+        Route::get('carts', 'getCarts');
+        Route::delete('delete-cart/{cart_id}', 'deleteCart');
 
     
     });

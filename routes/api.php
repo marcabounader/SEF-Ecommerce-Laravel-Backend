@@ -28,7 +28,7 @@ Route::controller(ProductController::class)->group(function () {
     // Route::delete('todo/{id}', 'destroy');
 }); 
 
-Route::group(['prefix' => 'admin'],function ()
+Route::group(['prefix' => 'admin','middleware' => ['user-access:admins']],function ()
 {
     Route::controller(AdminAuthController::class)->group(function () {
         Route::post('login', 'login');
@@ -46,7 +46,7 @@ Route::group(['prefix' => 'admin'],function ()
     }); 
 });
 
-Route::group(['prefix' => 'user'],function ()
+Route::group(['prefix' => 'user','middleware' => ['user-access:users']],function ()
 {
     Route::controller(UserAuthController::class)->group(function () {
         Route::post('login', 'login');
@@ -65,7 +65,7 @@ Route::group(['prefix' => 'user'],function ()
     });
 
     Route::controller(CartController::class)->group(function () {
-        Route::post('add-cart', 'addCart');
+        Route::post('add-cart/{product_id}', 'addCart');
         Route::get('carts', 'getCarts');
         Route::delete('delete-cart/{cart_id}', 'deleteCart');
 

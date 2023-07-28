@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminAuthController;
+use App\Http\Controllers\ManageProductController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserAuthController;
 use Illuminate\Http\Request;
@@ -35,7 +36,11 @@ Route::group(['prefix' => 'admin'],function ()
     });
 
     Route::controller(ManageProductController::class)->group(function () {
-        Route::post('add-product', 'setProduct');
+        Route::get('products', 'getProducts');
+        Route::post('add-product', 'addProduct');
+        Route::post('update-product', 'updateProduct');
+        Route::post('delete-product', 'deleteProduct');
+
     }); 
 });
 

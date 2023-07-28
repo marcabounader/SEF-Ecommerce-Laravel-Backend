@@ -30,7 +30,7 @@ class FavoriteController extends Controller
         $favorite = new Favorite;
         $user=auth('users')->user();
 
-        $favorite->= $user->getAuthIdentifier();
+        $favorite-> $user->getAuthIdentifier();
         $favorite->product_id = $request->product_id;
 
         $favorite->save();

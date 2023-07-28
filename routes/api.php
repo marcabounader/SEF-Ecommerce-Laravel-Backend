@@ -7,6 +7,7 @@ use App\Http\Controllers\ManageProductController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserAuthController;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,12 +28,21 @@ Route::controller(ProductController::class)->group(function () {
     // Route::put('todo/{id}', 'update');
     // Route::delete('todo/{id}', 'destroy');
 }); 
-
-Route::group(['prefix' => 'admin','middleware' => ['user-access:admins']],function ()
+Route::group(['prefix' => 'login'],function ()
 {
     Route::controller(AdminAuthController::class)->group(function () {
-        Route::post('login', 'login');
-        Route::post('register', 'register');
+        Route::post('admin-login', 'login');
+        Route::post('admin-register', 'register');
+    });
+    Route::controller(UserAuthController::class)->group(function () {
+        Route::post('user-login', 'login');
+        Route::post('user-register', 'register');
+
+    });
+});
+Route::group(['prefix' => 'admin','middleware' => ['user-access:admins','jwt.auth']],function ()
+{
+    Route::controller(AdminAuthController::class)->group(function () {
         Route::post('logout', 'logout');
         Route::post('refresh', 'refresh');
     });
@@ -46,11 +56,11 @@ Route::group(['prefix' => 'admin','middleware' => ['user-access:admins']],functi
     }); 
 });
 
-Route::group(['prefix' => 'user','middleware' => ['user-access:users']],function ()
+
+Route::group(['prefix' => 'user','middleware' => ['user-access:users','jwt.auth']],function ()
 {
     Route::controller(UserAuthController::class)->group(function () {
-        Route::post('login', 'login');
-        Route::post('register', 'register');
+
         Route::post('logout', 'logout');
         Route::post('refresh', 'refresh');
     
@@ -71,8 +81,6 @@ Route::group(['prefix' => 'user','middleware' => ['user-access:users']],function
 
     
     });
-
-
 });
 
 Route::controller(ProductController::class)->group(function () {

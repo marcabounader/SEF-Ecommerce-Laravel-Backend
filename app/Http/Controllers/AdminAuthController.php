@@ -8,10 +8,10 @@ use App\Models\Admin;
 
 class AdminAuthController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware('auth:admins', ['except' => ['login','register']]);
-    // }
+    public function __construct()
+    {
+        $this->middleware('auth:admins', ['except' => ['login','register']]);
+    }
     public function login(Request $request)
     {
         $request->validate([

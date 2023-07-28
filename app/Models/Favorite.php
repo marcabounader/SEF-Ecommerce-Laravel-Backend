@@ -12,4 +12,6 @@ class Favorite extends Model
     protected $fillable = ['user_id', 'product_id'];
     public $timestamps = false;
 
+    
+
 }

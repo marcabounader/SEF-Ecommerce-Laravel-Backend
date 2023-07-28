@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminAuthController;
+use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\ManageProductController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserAuthController;
@@ -53,6 +54,15 @@ Route::group(['prefix' => 'user'],function ()
         Route::post('refresh', 'refresh');
     
     });
+
+    Route::controller(FavoriteController::class)->group(function () {
+        Route::post('add-favorite', 'addFavorite');
+        Route::get('favorites', 'getFavorites');
+        Route::delete('delete-favorite/{favorite_id}', 'deleteFavorite');
+
+    
+    });
+
 
 });
 

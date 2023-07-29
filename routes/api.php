@@ -41,7 +41,7 @@ Route::group(['prefix' => 'admin','middleware' => ['user-access:admins','jwt.aut
         Route::get('products', 'getProducts');
         Route::post('add-product', 'addProduct');
         Route::post('update-product', 'updateProduct');
-        Route::post('delete-product', 'deleteProduct');
+        Route::delete('delete-product', 'deleteProduct');
 
     }); 
 });

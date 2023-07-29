@@ -18,6 +18,7 @@ return new class extends Migration
                 $table->id();
                 $table->string('product_name');
                 $table->string('product_description');
+                $table->string('product_category');
                 $table->string('product_image');
 
             });

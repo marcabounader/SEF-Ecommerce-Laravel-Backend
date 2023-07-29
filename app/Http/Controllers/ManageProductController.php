@@ -28,6 +28,7 @@ class ManageProductController extends Controller
  
         $product->product_name = $request->product_name;
         $product->product_description = $request->product_description;
+        $product->product_category = $request->product_category;
         $product->product_image = $request->product_image;
 
         $product->save();
@@ -45,8 +46,9 @@ class ManageProductController extends Controller
         $id=$request->id;
         $product_name=$request->product_name;
         $product_description=$request->product_description;
+        $product_category=$request->product_category;
         $product_image=$request->product_image;
-        Product::where('id',$id)->update(['product_name'=>$product_name,'product_description'=>$product_description,'product_image'=>$product_image]);
+        Product::where('id',$id)->update(['product_name'=>$product_name,'product_description'=>$product_description,'product_category'=>$product_category,'product_image'=>$product_image]);
         return response()->json([
             'status' => 'success',
         ]); 
@@ -58,7 +60,7 @@ class ManageProductController extends Controller
         // Validate the request...
  
         $id=$request->id;
-        $deleted=Product::where('id',$id)->delete();
+        Product::where('id',$id)->delete();
         return response()->json([
             'status' => 'success'
         ]); 

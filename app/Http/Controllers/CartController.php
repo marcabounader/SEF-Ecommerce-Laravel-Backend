@@ -24,11 +24,12 @@ class CartController extends Controller
         
     }
     public function addCart(Request $request)
-    {
+    {        
+        $cart = new Cart;
+
         // Validate the request...
         $user=auth('users')->user();
 
-        $cart = new Cart;
  
         $cart->user_id = $user->getAuthIdentifier();
         $cart->product_id = $request->product_id;

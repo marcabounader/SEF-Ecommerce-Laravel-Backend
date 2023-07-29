@@ -21,8 +21,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['prefix' => 'login'],function ()
-{
     Route::controller(AdminAuthController::class)->group(function () {
         Route::post('admin-login', 'login');
         Route::post('admin-register', 'register');
@@ -32,7 +30,6 @@ Route::group(['prefix' => 'login'],function ()
         Route::post('user-register', 'register');
 
     });
-});
 Route::group(['prefix' => 'admin','middleware' => ['user-access:admins','jwt.auth']],function ()
 {
     Route::controller(AdminAuthController::class)->group(function () {
@@ -68,7 +65,7 @@ Route::group(['prefix' => 'user','middleware' => ['user-access:users','jwt.auth'
     });
 
     Route::controller(CartController::class)->group(function () {
-        Route::post('add-cart/{product_id}', 'addCart');
+        Route::post('add-cart', 'addCart');
         Route::get('carts', 'getCarts');
         Route::delete('delete-cart/{cart_id}', 'deleteCart');
 

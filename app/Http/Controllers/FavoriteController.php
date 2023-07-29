@@ -42,10 +42,10 @@ class FavoriteController extends Controller
 
 
 
-    public function deleteFavorite(Request $request,string $favorite_id)
+    public function deleteFavorite(Request $request,string $product_id)
     {
         $user=auth('users')->user();
-        Favorite::where([['user_id', '=', $user->getAuthIdentifier()],['id', '=', $favorite_id]])->delete();
+        Favorite::where([['user_id', '=', $user->getAuthIdentifier()],['id', '=', $product_id]])->delete();
         return response()->json([
             'status' => 'success'
         ]); 

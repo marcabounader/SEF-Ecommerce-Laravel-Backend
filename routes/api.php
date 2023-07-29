@@ -59,7 +59,7 @@ Route::group(['prefix' => 'user','middleware' => ['user-access:users','jwt.auth'
     Route::controller(FavoriteController::class)->group(function () {
         Route::post('add-favorite', 'addFavorite');
         Route::get('favorites', 'getFavorites');
-        Route::delete('delete-favorite/{favorite_id}', 'deleteFavorite');
+        Route::delete('delete-favorite/{product_id}', 'deleteFavorite');
 
     
     });
@@ -67,7 +67,7 @@ Route::group(['prefix' => 'user','middleware' => ['user-access:users','jwt.auth'
     Route::controller(CartController::class)->group(function () {
         Route::post('add-cart', 'addCart');
         Route::get('carts', 'getCarts');
-        Route::delete('delete-cart/{cart_id}', 'deleteCart');
+        Route::delete('delete-cart/{product_id}', 'deleteCart');
 
     
     });

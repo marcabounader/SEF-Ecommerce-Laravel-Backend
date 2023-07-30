@@ -33,7 +33,7 @@ class CartController extends Controller
  
         $cart->user_id = $user->getAuthIdentifier();
         $cart->product_id = $request->product_id;
-
+        $cart->quantity="1";
         $cart->save();
  
         return response()->json([
@@ -41,7 +41,23 @@ class CartController extends Controller
         ]);
     }   
 
+    public function updateQuantity(Request $request){
+        $user=auth('users')->user();
+        
+        $product_id=$request->product_id;
+        $quantity=$request->quantity;
+        try{
+            Cart::where([['user_id','=',$user->getAuthIdentifier()],['product_id','=',$product_id]])->update(['quantity'=>$quantity]);
+            return response()->json([
+                'status' => 'success'
+            ]); 
+        } catch(e){
+            return response()->json([
+                'status' => 'error'
+            ]); 
+        }
 
+    }
 
     public function deleteCart(Request $request,string $product_id)
     {

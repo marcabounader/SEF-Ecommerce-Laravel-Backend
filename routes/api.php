@@ -68,6 +68,7 @@ Route::group(['prefix' => 'user','middleware' => ['user-access:users','jwt.auth'
         Route::post('add-cart', 'addCart');
         Route::get('carts', 'getCarts');
         Route::delete('delete-cart/{product_id}', 'deleteCart');
+        Route::put('update-quantity', 'updateQuantity');
 
     
     });

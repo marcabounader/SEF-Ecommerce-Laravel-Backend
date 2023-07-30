@@ -22,7 +22,7 @@ class CartController extends Controller
             ->where('users.id',$user->getAuthIdentifier())
             ->join('carts', 'users.id', '=', 'carts.user_id')
             ->join('products', 'carts.product_id', '=', 'products.id')
-            ->select('products.id', 'products.product_image', 'products.product_description','products.product_category','products.product_image','carts.quantity')
+            ->select('products.id', 'products.product_name', 'products.product_description','products.product_category','products.product_image','carts.quantity')
             ->get();
 
             return response()->json([

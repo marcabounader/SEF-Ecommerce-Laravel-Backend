@@ -19,6 +19,8 @@ return new class extends Migration
                 $table->foreignId('user_id')->constrained('users');
                 $table->foreignId('product_id')->constrained('products');
                 $table->integer('quantity');
+                $table->unique('user_id', 'product_id');
+
             });
         }
     }

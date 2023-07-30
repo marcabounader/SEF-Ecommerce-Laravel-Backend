@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CartController extends Controller
 {
@@ -16,12 +17,29 @@ class CartController extends Controller
     function getCarts(){
         $user=auth('users')->user();
 
-        $products = User::find($user->getAuthIdentifier())->cart_products()->get();
-        return response()->json([
-            'status' => 'success',
-            'products' => $products,
-        ]);
-        
+        try{
+            $products=DB::table('users')
+            ->where('users.id',$user->getAuthIdentifier())
+            ->join('carts', 'users.id', '=', 'carts.user_id')
+            ->join('products', 'carts.product_id', '=', 'products.id')
+            ->select('products.id', 'products.product_image', 'products.product_description','products.product_category','products.product_image','carts.quantity')
+            ->get();
+
+            return response()->json([
+                'status' => 'success',
+                'products' => $products,
+            ]);
+            
+        } catch(e){
+            return response()->json([
+                'status' => 'error',
+            ]);
+
+        }
+
+
+        // $products = User::find($user->getAuthIdentifier())->cart_products()->get();
+
     }
     public function addCart(Request $request)
     {        

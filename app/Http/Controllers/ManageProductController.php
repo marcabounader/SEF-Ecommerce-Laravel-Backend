@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
+use App\Models\Favorite;
 use App\Models\Product;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -58,8 +60,9 @@ class ManageProductController extends Controller
     public function deleteProduct(Request $request)
     {
         // Validate the request...
- 
         $id=$request->id;
+        Favorite::where('product_id', '=', $id)->delete();
+        Cart::where('product_id', '=', $id)->delete();
         Product::where('id',$id)->delete();
         return response()->json([
             'status' => 'success'

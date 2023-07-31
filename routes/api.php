@@ -60,7 +60,7 @@ Route::group(['prefix' => 'user','middleware' => ['user-access:users','jwt.auth'
         Route::post('add-favorite', 'addFavorite');
         Route::get('favorites', 'getFavorites');
         Route::delete('delete-favorite/{product_id}', 'deleteFavorite');
-
+        Route::get('is-favorite/{product_id}','isFavorite');
     
     });
 

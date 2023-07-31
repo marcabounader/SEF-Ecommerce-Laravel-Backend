@@ -40,15 +40,40 @@ class FavoriteController extends Controller
         ]);
     }   
 
+    public function isFavorite(Request $request,string $product_id)
+    {
+        // Validate the request...
+ 
+        $user=auth('users')->user();
+
+        try{
+            $product=Favorite::where([['user_id', '=', $user->getAuthIdentifier()],['product_id', '=', $product_id]])->select('id')->get();
+            return response()->json([
+                'status' => 'success',
+                'product'=>$product
+            ]); 
+        } catch(e){
+            return response()->json([
+                'status' => 'error'
+            ]);
+        }
+    }   
 
 
     public function deleteFavorite(Request $request,string $product_id)
     {
         $user=auth('users')->user();
-        Favorite::where([['user_id', '=', $user->getAuthIdentifier()],['product_id', '=', $product_id]])->delete();
-        return response()->json([
-            'status' => 'success'
-        ]); 
+        try{
+            Favorite::where([['user_id', '=', $user->getAuthIdentifier()],['product_id', '=', $product_id]])->delete();
+            return response()->json([
+                'status' => 'success'
+            ]); 
+        } catch(e){
+            return response()->json([
+                'status' => 'error'
+            ]);
+        }
+
     }   
 
 }

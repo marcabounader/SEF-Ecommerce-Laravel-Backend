@@ -30,7 +30,7 @@ use Illuminate\Support\Facades\Route;
         Route::post('user-register', 'register');
 
     });
-Route::group(['prefix' => 'admin','middleware' => ['user-access:admins','jwt.auth']],function ()
+Route::group(['prefix' => 'admin','middleware' => ['auth:admins']],function ()
 {
     Route::controller(AdminAuthController::class)->group(function () {
         Route::post('logout', 'logout');
@@ -47,7 +47,7 @@ Route::group(['prefix' => 'admin','middleware' => ['user-access:admins','jwt.aut
 });
 
 
-Route::group(['prefix' => 'user','middleware' => ['user-access:users','jwt.auth']],function ()
+Route::group(['prefix' => 'user','middleware' => ['auth:users']],function ()
 {
     Route::controller(UserAuthController::class)->group(function () {
 

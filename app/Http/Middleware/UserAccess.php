@@ -3,8 +3,10 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\Auth;
 
-class UserAccess
+class UserAccess extends Middleware
 {
     /**
      * Handle an incoming request.
@@ -13,12 +15,16 @@ class UserAccess
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next, $guard = null)
+    public function handle($request, Closure $next, $guard=null)
     {
-        if($guard != null)
-            auth()->shouldUse($guard);
-            // $user=Auth::user();
-
-        return $next($request);
+        if ($guard == "admins" && !Auth::guard($guard)->check()) {
+            return redirect('/admin-console/admin-login.html');
+        }
+        if ($guard == "users" && !Auth::guard($guard)->check()) {
+            return redirect('/login.html');
+        }
+        // if (Auth::guard($guard)->check()) {
+        //     return redirect('/login.html');
+        // }
     }
 }

@@ -7,6 +7,7 @@ use App\Models\Favorite;
 use App\Models\Product;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Symfony\Component\Mime\Message;
 
 class ManageProductController extends Controller
 {
@@ -22,22 +23,33 @@ class ManageProductController extends Controller
             'products' => $products,
         ]);
     }
+
     public function addProduct(Request $request)
     {
-        // Validate the request...
  
         $product = new Product;
- 
+        $image="";
         $product->product_name = $request->product_name;
         $product->product_description = $request->product_description;
         $product->product_category = $request->product_category;
-        $product->product_image = $request->product_image;
 
-        $product->save();
- 
+        try{
+            $base64Image=$request->image;
+            $image=base64_decode($base64Image);
+            $imageName = time() . '.png'; 
+            file_put_contents(public_path('img/' . $imageName), $image);
+            $product->product_image='http://localhost:8000/img/' . $imageName;
+            $product->save();
+            return response()->json([
+                'status' => "success"
+            ]);
+        } catch(\Exception $e){
+            echo 'Message: '.$e->getMessage();
+        }
         return response()->json([
-            'status' => 'success',
+            'status' => "error"
         ]);
+
     }   
 
     public function updateProduct(Request $request)

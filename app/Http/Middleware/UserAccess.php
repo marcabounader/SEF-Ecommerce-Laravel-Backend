@@ -17,6 +17,8 @@ class UserAccess
     {
         if($guard != null)
             auth()->shouldUse($guard);
+            // $user=Auth::user();
+
         return $next($request);
     }
 }
